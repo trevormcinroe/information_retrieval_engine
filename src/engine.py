@@ -82,7 +82,7 @@ class Engine:
     def load_model_weights(self):
         self.siamese_model.load_weights(self.model_weights_file)
 
-    def glasses(self, query, username='IRE_loader', password='IRE_loader', db='IRE', collection='dev'):
+    def glasses(self, query, username=<REDACTED>, password=<REDACTED>, db=<REDACTED>, collection=<REDACTED>):
         '''A helper function to write data
         Args:
             query:
@@ -95,7 +95,7 @@ class Engine:
             a dict
         '''
         # Connecting to the client
-        client = pymongo.MongoClient('mongodb://localhost:27017/',
+        client = pymongo.MongoClient('mongodb://<REDACTED>/',
                                      username=username,
                                      password=password,
                                      authSource=db,
