@@ -9,8 +9,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 class Engine:
     """
-
-
     Attributes:
         Provided:
             embeddings_file (str): filepath of the embeddings matrix
@@ -109,11 +107,13 @@ class Engine:
         """
 
         Args:
-            keywords (list): str keywords
+            keywords (str): str keywords
 
         Returns:
 
         """
-        query = {'$or': [{'keywords': x} for x in keywords]}
+        keywords = keywords.split(',')
+
+        query = {'$or': [{'keywords': {'$regex': '.*' + x + '.*', '$options': 'i'}} for x in keywords]}
 
         return self.glasses(query=query)

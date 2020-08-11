@@ -21,6 +21,9 @@
         \::/    /                \:|   |                  \::/    /        
          \/____/                  \|___|                   \/____/         
 ```
+
+![alt-text](./src/assets/screencast.gif)
+
 ### Introduction         
 The Information Retrieval Engine (IRE) was created as a two-part final project for Northwestern's MSDS-453 Natural Language Processing course.
 

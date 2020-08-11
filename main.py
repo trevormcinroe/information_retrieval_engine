@@ -1,31 +1,8 @@
 import time
 import os
 from src.engine import Engine
+from src.assets.printables import HEADER, about_msg
 
-HEADER = r"""          _____                    _____                    _____          
-         /\    \                  /\    \                  /\    \         
-        /::\    \                /::\    \                /::\    \        
-        \:::\    \              /::::\    \              /::::\    \       
-         \:::\    \            /::::::\    \            /::::::\    \      
-          \:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-           \:::\    \        /:::/__\:::\    \        /:::/__\:::\    \    
-           /::::\    \      /::::\   \:::\    \      /::::\   \:::\    \   
-  ____    /::::::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \  
- /\   \  /:::/\:::\    \  /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \ 
-/::\   \/:::/  \:::\____\/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\
-\:::\  /:::/    \::/    /\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /
- \:::\/:::/    / \/____/  \/____|:::::\/:::/    /  \:::\   \:::\   \/____/ 
-  \::::::/    /                 |:::::::::/    /    \:::\   \:::\    \     
-   \::::/____/                  |::|\::::/    /      \:::\   \:::\____\    
-    \:::\    \                  |::| \::/____/        \:::\   \::/    /    
-     \:::\    \                 |::|  ~|               \:::\   \/____/     
-      \:::\    \                |::|   |                \:::\    \         
-       \:::\____\               \::|   |                 \:::\____\        
-        \::/    /                \:|   |                  \::/    /        
-         \/____/                  \|___|                   \/____/         
-Information Retrieval Engine
-author: trevor mcinroe
-"""
 
 
 def progressBar(iterable, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
@@ -78,19 +55,18 @@ if __name__ == '__main__':
     for item in progressBar(items, prefix='Loading embeddings, tokenizers, models:', suffix='Complete', length=50):
         # Do stuff...
         # engine.load_embeddings()
+        pass
+        # time.sleep(2)
 
-        time.sleep(2)
-
-    text = input('\nWhat would you like to learn about? ')
+    text = input('\nWhat would you like to learn about? (separate keywords by comma) ')
 
     while not text == 'exit':
 
         if text == 'about IRE':
-            print("""\nThe Information Retrieval Engine was created by Trevor McInroe as a two-part project for Northwestern University's MSDS-453 Natural Language Processing class. It has five main components: a keyword extraction algorithm (TextRank), a text summarization model (BART encoder-decoder with Attention & Beam search), a semantic similarity model (GRU Siamese network), word2vec embeddings, and MongoDB. 10,000 Wikipedia articles were summarized and had their keywords extracted. This data is stored on a locally-running MongoDB instance. When a user makes a query, the DB is filtered to documents with similar keywords. The summaries of this filtered list are fed, along with the query, into the Siamese network and the summary with the highest predicted semantic similarity is returned.""")
-
+            print(about_msg)
             # text = input('\nWhat would you like to learn about? ')
 
-        results = engine.make_query(keywords=[text])
+        results = engine.make_query(keywords=text)
 
         for i in results:
             print()
@@ -98,7 +74,7 @@ if __name__ == '__main__':
             print()
             break
 
-        text = input('\nWhat would you like to learn about? ')
+        text = input('\nWhat would you like to learn about? (separate keywords by comma) ')
 
     print('Thanks for using the Information Retrieval Engine. Bye!')
     time.sleep(0.5)
