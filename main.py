@@ -39,8 +39,6 @@ def progressBar(iterable, prefix='', suffix='', decimals=1, length=100, fill='â–
     print()
 
 
-
-
 engine = Engine(embeddings_file=os.path.join(os.path.dirname(__file__), './data/embeddings.data'),
                 tokenizer_file=os.path.join(os.path.dirname(__file__), './data/tokenizer.data'),
                 model_weights_file=None)
