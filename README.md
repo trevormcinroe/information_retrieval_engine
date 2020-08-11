@@ -21,7 +21,7 @@
         \::/    /                \:|   |                  \::/    /        
          \/____/                  \|___|                   \/____/         
 ```
-
+GIF!
 ![alt-text](./src/assets/screencast.gif)
 
 ### Introduction         
