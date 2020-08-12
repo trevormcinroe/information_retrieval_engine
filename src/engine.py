@@ -2,6 +2,7 @@ import pickle
 import tensorflow as tf
 import os
 import pymongo
+import numpy as np
 
 # Disables TF's verbose logging...
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -68,6 +69,8 @@ class Engine:
         magru = tf.keras.Model([left_input, right_input], [magru_distance])
         optimizer = tf.keras.optimizers.Adadelta(learning_rate=1, rho=0.985, clipnorm=2.5)
 
+        magru.load_weights(self.model_weights_file)
+
         magru.compile(loss='mean_squared_error', optimizer=optimizer)
 
         self.siamese_model = magru
@@ -117,3 +120,36 @@ class Engine:
         query = {'$or': [{'keywords': {'$regex': '.*' + x + '.*', '$options': 'i'}} for x in keywords]}
 
         return self.glasses(query=query)
+
+    def make_batch(self, query, document_candidates):
+        """Creates a batch that is suitable for sending through the model
+
+        Args:
+            query (str): the raw user-given query
+            document_candidates (list): results['tokens'] from self.make_query() - list of ints
+
+        Returns:
+            query, document_candidates
+            in batch form. both will have shape (len(document_candidates), max_sentence_length)
+        """
+        if not isinstance(document_candidates, list):
+            max_sentence_length = 1
+        else:
+            max_sentence_length = np.max([len(x) for x in document_candidates])
+
+        query_tokenized = self.tokenizer.texts_to_sequences([query])
+        # document_candidates_tokenized = self.tokenizer.texts_to_sequences(document_candidates)
+
+        query_tokenized = tf.keras.preprocessing.sequence.pad_sequences(query_tokenized,
+                                                                        maxlen=max_sentence_length,
+                                                                        padding='post')
+        document_candidates_tokenized = tf.keras.preprocessing.sequence.pad_sequences(document_candidates,
+                                                                                      maxlen=max_sentence_length,
+                                                                                      padding='post')
+
+        query_tokenized = np.array([query_tokenized] * len(document_candidates))[:, 0, :]
+        return query_tokenized, document_candidates_tokenized
+
+    def run_model(self, q, d):
+        """"""
+        return self.siamese_model([q, d])

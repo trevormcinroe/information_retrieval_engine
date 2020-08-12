@@ -3,3 +3,4 @@ pickle
 os
 tensorflow==2.2.0
 pymongo
+numpy
