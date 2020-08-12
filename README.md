@@ -25,9 +25,15 @@
 ![alt-text](./src/assets/screencast.gif)
 
 ### Introduction         
-The Information Retrieval Engine (IRE) was created as a two-part final project for Northwestern's MSDS-453 Natural Language Processing course.
+The Information Retrieval Engine (IRE) is a CLI tool for finding relevant data that is powered by two deep learning models, a keyword extraction algorithm, and MongoDB. It was created as a two-part final project for Northwestern's MSDS-453 Natural Language Processing course. 
 
 ### How does it work?
+As a preprocessing step, 10,000 Wikipedia pages are summarized with (1) and have their keywords extracted with (3).
+This data was then stored in a local instance of MongoDB. During runtime, a user provides a keyword based query. These keywords
+are used to filter the database to a set of summary candidates. The keywords and candidate summaries are then tokenized and embedded with (4) and fed through 
+model (2) to determine their semantic similarity. Finally, the summary with the highest predicted similarity is returned to the user.
+
+### Models/Algorithms
 1. BART pre-trained on the CNN/Daily Mail dataset for article summarization
     * [BART: Denoising Sequence-to-Dequence Pre-training for Natural Language Generation, Translation, and Comprehension](https://arxiv.org/pdf/1910.13461.pdf)
 2. GRU Siamese network trained on the SemEval-2014 dataset for semantic similarity
@@ -37,7 +43,3 @@ The Information Retrieval Engine (IRE) was created as a two-part final project f
 4. Word2Vec embeddings pre-trained on the Google News corpus
     * [Distributed Representations of Words and Phrases and their Compositionality](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)
 
-As a preprocessing step, 10,000 Wikipedia pages are summarized (1) and have their keywords extracted (3).
-This data was then stored in a local instance of MongoDB. During runtime, a user provides a keyword based query. These keywords
-are used to filter the database to a set of summary candidates. The keywords and candidate summaries are then tokenized and embedded (4) and fed through
-a model (2) to determine their semantic similarity. Finally, the summary with the highest predicted similarity is returned to the user.
