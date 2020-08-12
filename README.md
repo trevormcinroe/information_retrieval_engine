@@ -28,8 +28,8 @@
 The Information Retrieval Engine (IRE) is a CLI tool for finding relevant data that is powered by two deep learning models, a keyword extraction algorithm, and MongoDB. It was created as a two-part final project for Northwestern's MSDS-453 Natural Language Processing course. 
 
 ### How does it work?
-As a preprocessing step, 10,000 Wikipedia pages are summarized with (1) and have their keywords extracted with (3).
-This data was then stored in a local instance of MongoDB. During runtime, a user provides a keyword based query. These keywords
+As a preprocessing step, 10,000 Wikipedia pages were summarized with (1) and had their keywords extracted with (3).
+This data was then stored in a local instance of MongoDB. During runtime, a user provides a keyword-based query. These keywords
 are used to filter the database to a set of summary candidates. The keywords and candidate summaries are then tokenized and embedded with (4) and fed through 
 model (2) to determine their semantic similarity. Finally, the summary with the highest predicted similarity is returned to the user.
 
